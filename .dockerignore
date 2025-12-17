@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache/
+
+# Virtual envs
+.venv/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.idea/
+*.iml
+
+# Data and notebooks
+training/data/
+training/notebooks/
+
+# OS
+Thumbs.db
+.DS_Store
