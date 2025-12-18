@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.api import health, predict, openapi_overrides
-from app.cache import RedisCache
+from app.cache import InMemoryCache, RedisCache
 from app.config import get_settings
 from app.predictor import Predictor
 
@@ -12,8 +12,11 @@ from app.predictor import Predictor
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
-
-    cache = RedisCache.from_url(settings.redis_url, ttl_seconds=settings.cache_ttl_seconds)
+    backend = settings.cache_backend
+    if backend == "memory":
+        cache = InMemoryCache(ttl_seconds=settings.cache_ttl_seconds)
+    else:
+        cache = RedisCache.from_url(settings.redis_url, ttl_seconds=settings.cache_ttl_seconds)
     app.state.predictor = Predictor(settings.model_path, cache=cache)  # type: ignore[attr-defined]
 
     yield

@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application source
 COPY app ./app
-COPY training/models ./training/models
+COPY training ./training
 COPY utils ./utils
 
 EXPOSE 8000

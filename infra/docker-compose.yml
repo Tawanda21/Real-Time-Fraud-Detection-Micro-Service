@@ -12,6 +12,7 @@ services:
       CACHE_TTL_SECONDS: 300
       RATE_LIMIT_PER_MINUTE: 120
       LOG_LEVEL: INFO
+      PYTHONPATH: /app
     ports:
       - "8000:8000"
     depends_on:
@@ -30,12 +31,13 @@ services:
       CACHE_TTL_SECONDS: 300
       RATE_LIMIT_PER_MINUTE: 120
       LOG_LEVEL: INFO
+      PYTHONPATH: /app
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     ports:
       - "8000:8000"
     volumes:
       - ../app:/app/app
-      - ../training/models:/app/training/models
+      - ../training:/app/training
       - ../utils:/app/utils
     depends_on:
       - redis
